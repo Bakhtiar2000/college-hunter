@@ -9,7 +9,7 @@ export default function ErrorPage() {
 
             <iframe className="mx-auto" src="https://giphy.com/embed/8L0Pky6C83SzkzU55a" width="480" height="480" allowFullScreen></iframe>
 
-            <div className="btn btn-block bg-orange-500 text-white border-0 text-xl"><Link to='/'>Back to home</Link></div>
+            <Link to='/'><div className="btn btn-block bg-orange-500 text-white border-0 text-xl">Back to home</div></Link>
         </div>
     );
 }
