@@ -22,7 +22,6 @@ const Login = () => {
                 const loggedUser = res.user
                 console.log(loggedUser)
                 setError('')
-                form.reset()
             })
             .catch(err => {
                 console.log(err.message)
@@ -57,7 +56,6 @@ const Login = () => {
                 console.log(loggedUser)
                 setError('')
                 // navigate(from, { replace: true })
-                form.reset()
             })
             .catch(err => setError(err.message))
     }
