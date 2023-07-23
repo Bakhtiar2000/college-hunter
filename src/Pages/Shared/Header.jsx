@@ -10,7 +10,7 @@ const Header = () => {
             .catch()
     }
     return (
-        <div className='mb-10'>
+        <div className=''>
             <div className="navbar bg-base-100">
                 <div className="navbar-start">
                     <div className="dropdown">
@@ -18,27 +18,27 @@ const Header = () => {
                             <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h8m-8 6h16" /></svg>
                         </label>
                         <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
-                            <li><a>Home</a></li>
-                            <li><a>Colleges</a></li>
-                            <li><a>Admissions</a></li>
-                            <li><a>My Colleges</a></li>
+                            <li><Link to='/'>Home</Link></li>
+                            <li><Link to='/colleges'>Colleges</Link></li>
+                            <li><Link to='/admissions'>Admissions</Link></li>
+                            <li><Link to='/myColleges'>My Colleges</Link></li>
                         </ul>
                     </div>
                     <a className="btn btn-ghost normal-case text-xl">College Hunter</a>
                 </div>
                 <div className="navbar-center hidden lg:flex">
                     <ul className="menu menu-horizontal px-1">
-                        <li><a>Home</a></li>
-                        <li><a>Colleges</a></li>
-                        <li><a>Admissions</a></li>
-                        <li><a>My Colleges</a></li>
+                    <li><Link to='/'>Home</Link></li>
+                            <li><Link to='/colleges'>Colleges</Link></li>
+                            <li><Link to='/admissions'>Admissions</Link></li>
+                            <li><Link to='/myColleges'>My Colleges</Link></li>
                     </ul>
                 </div>
-                <div className="navbar-end">
+                <div className="navbar-end mr-3">
                 {
                         user ?
                             <>
-                                <div >
+                                <div className='btn btn-ghost'>
                                     <Link to='/profile'><p>{user?.displayName}</p></Link>
                                 </div>
                                 <button className="ml-3 btn bg-violet-500 hover:bg-violet-700 border-0 text-white" onClick={handleLogOut}>Log out</button>

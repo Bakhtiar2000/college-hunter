@@ -7,7 +7,7 @@ import CollegeReview from './CollegeReview/CollegeReview';
 
 const Home = () => {
     return (
-        <div>
+        <div className='bg-blue-200 py-10'>
             <Banner></Banner>
             <TopColleges></TopColleges>
             <GroupPictureGallery></GroupPictureGallery>

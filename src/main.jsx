@@ -12,6 +12,10 @@ import Home from './Pages/Home/Home.jsx';
 import Login from './Pages/Login/Login.jsx';
 import Register from './Pages/Login/Register.jsx';
 import AuthProvider from './Providers/AuthProvider.jsx';
+import Colleges from './Pages/Colleges/Colleges.jsx';
+import Admission from './Pages/Admission/Admission.jsx';
+import MyColleges from './Pages/MyColleges/MyColleges.jsx';
+import Profile from './Pages/Profile/Profile.jsx';
 
 
 const router = createBrowserRouter([
@@ -31,6 +35,22 @@ const router = createBrowserRouter([
       {
         path: '/register',
         element: <Register></Register>
+      },
+      {
+        path: '/colleges',
+        element: <Colleges></Colleges>
+      },
+      {
+        path: '/admissions',
+        element: <Admission></Admission>
+      },
+      {
+        path: '/myColleges',
+        element: <MyColleges></MyColleges>
+      },
+      {
+        path: '/profile',
+        element: <Profile></Profile>
       },
     ]
   },
