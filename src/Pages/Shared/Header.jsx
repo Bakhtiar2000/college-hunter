@@ -23,8 +23,8 @@ const Header = () => {
                                 <li><Link to='/colleges'>Colleges</Link></li>
                                 <li><Link to='/admissions'>Admissions</Link></li>
                                 <li><Link to='/myColleges'>My Colleges</Link></li>
-                                <div className='btn btn-ghost w-32 hidden lg:block'>
-                                    <Link to={`/profile/${user?.email}`}><p>{user?.displayName}</p></Link>
+                                <div className='btn btn-ghost'>
+                                    <Link to='/profile'><p>{user?.displayName}</p></Link>
                                 </div>
                             </ul>
 
@@ -52,8 +52,8 @@ const Header = () => {
                     {
                         user ?
                             <>
-                                <div className='btn btn-ghost w-32 hidden lg:block'>
-                                    <Link to={`/profile/${user?.email}`}><p>{user?.displayName}</p></Link>
+                                <div className='btn btn-ghost w-32 p-auto hidden lg:inline-flex'>
+                                    <Link to='/profile'><p>{user?.displayName}</p></Link>
                                 </div>
                                 <button className="ml-3 btn bg-violet-500 hover:bg-violet-700 border-0 text-white" onClick={handleLogOut}>Log out</button>
                             </> :

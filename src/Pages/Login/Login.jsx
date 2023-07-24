@@ -67,7 +67,7 @@ const Login = () => {
                 const loggedUser = res.user
                 console.log(loggedUser)
                 const savedUser = { name: loggedUser?.displayName, photo: loggedUser?.photoURL, university: "", address: "", email: loggedUser?.email }
-                fetch('http://localhost:5000/users', {
+                fetch('https://college-hunter-server-one.vercel.app/users', {
                     method: 'POST',
                     headers: {
                         'content-type': 'application/json'
@@ -99,7 +99,7 @@ const Login = () => {
                 const loggedUser = res.user
                 console.log(loggedUser)
                 const savedUser = { name: loggedUser?.displayName, photo: loggedUser?.photoURL, university: "", address: "", email: loggedUser?.email }
-                fetch('http://localhost:5000/users', {
+                fetch('https://college-hunter-server-one.vercel.app/users', {
                     method: 'POST',
                     headers: {
                         'content-type': 'application/json'

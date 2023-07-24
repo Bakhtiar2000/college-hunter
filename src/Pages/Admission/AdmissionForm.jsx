@@ -10,7 +10,7 @@ const AdmissionForm = () => {
     const [colleges, setColleges] = useState([])
 
     useEffect(() => {
-        fetch(`http://localhost:5000/colleges/${params.id}`)
+        fetch(`https://college-hunter-server-one.vercel.app/colleges/${params.id}`)
             .then(res => res.json())
             .then(data => setColleges(data))
     }, [])
@@ -29,7 +29,7 @@ const AdmissionForm = () => {
         const admittedUser = { name, photo, subject, email, phone, dob, address, ...colleges }
         console.log(admittedUser)
 
-        fetch('http://localhost:5000/myColleges', {
+        fetch('https://college-hunter-server-one.vercel.app/myColleges', {
             method: 'POST',
             headers: {
                 'content-type': 'application/json'

@@ -1,9 +1,18 @@
-import React from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useLoaderData } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import { AuthContext } from '../../Providers/AuthProvider';
 
 const Profile = () => {
-    const profile = useLoaderData()
+    const { user }= useContext(AuthContext)
+    const [profile, setProfile] = useState([])
+
+    useEffect(() => {
+        fetch(`http://localhost:5000/users?email=${user?.email}`)
+            .then(res => res.json())
+            .then(data => setProfile(data))
+    }, [])
+    console.log(profile)
     const { _id, name, email, address, photo, university } = profile
     const handleSubmit = event => {
         event.preventDefault();
@@ -83,8 +92,7 @@ const Profile = () => {
                     </form>
                 </div>
             </div>
-            <img className='w-full' src="/assets/my-college-banner.webp" alt="" />
-            <h2 className='text-3xl md:text-5xl text-center  mt-20 mb-8 font-serif w-fit mx-auto'>My Profile</h2>
+            <h2 className='text-3xl md:text-5xl text-center  pt-28 mb-8 font-serif w-fit mx-auto'>My Profile</h2>
             <div className='max-w-7xl mx-auto mb-6 pl-5'>
                 <p><span className='font-semibold'>Name: </span>{name}</p>
                 <p><span className='font-semibold'>Email: </span> {email}</p>

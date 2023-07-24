@@ -7,7 +7,7 @@ const MyColleges = () => {
     const [colleges, setColleges] = useState([])
 
     useEffect(() => {
-        fetch(`http://localhost:5000/myColleges?email=${user?.email}`)
+        fetch(`https://college-hunter-server-one.vercel.app/myColleges?email=${user?.email}`)
             .then(res => res.json())
             .then(data => setColleges(data))
     }, [])
@@ -20,7 +20,7 @@ const MyColleges = () => {
         const rating = form.rating.value;
         const review = form.review.value;
         const newReview={name: user?.displayName, image:user?.photoURL, rating, comment: review }
-        fetch('http://localhost:5000/reviews', {
+        fetch('https://college-hunter-server-one.vercel.app/reviews', {
             method: 'POST',
             headers: {
                 'content-type': 'application/json'

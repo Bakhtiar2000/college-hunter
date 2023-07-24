@@ -45,7 +45,7 @@ const router = createBrowserRouter([
       {
         path: '/colleges/:id',
         element: <SingleCollege></SingleCollege>,
-        loader: ({ params }) => fetch(`http://localhost:5000/colleges/${params.id}`)
+        loader: ({ params }) => fetch(`https://college-hunter-server-one.vercel.app/colleges/${params.id}`)
       },
       {
         path: '/admissions',
@@ -60,9 +60,8 @@ const router = createBrowserRouter([
         element: <MyColleges></MyColleges>
       },
       {
-        path: '/profile/:email',
-        element: <Profile></Profile>,
-        loader: ({ params }) => fetch(`http://localhost:5000/users/${params.email}`)
+        path: '/profile',
+        element: <Profile></Profile>
       },
     ]
   },
