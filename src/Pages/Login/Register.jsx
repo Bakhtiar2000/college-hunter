@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { FcGoogle } from 'react-icons/fc';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../Providers/AuthProvider';
 import Swal from 'sweetalert2';
 import { FaGithub } from 'react-icons/fa';
@@ -8,15 +8,18 @@ import { FaGithub } from 'react-icons/fa';
 const Register = () => {
     const { createUser, updateUserProfile, googleSignIn, githubSignIn } = useContext(AuthContext)
     const [error, setError] = useState('');
+    const navigate = useNavigate()
 
     const handleRegister = event => {
         event.preventDefault()
         const form = event.target
         const name = form.name.value;
         const photo = form.photo.value;
+        const university = form.university.value;
+        const address = form.address.value;
         const email = form.email.value;
         const password = form.password.value;
-        console.log(name, photo, email, password)
+        const savedUser = { name, photo, university, address, email }
         setError('')
         if (password.length < 6) {
             setError('Password must be six characters long')
@@ -24,23 +27,34 @@ const Register = () => {
         }
 
         createUser(email, password)
-
             .then(() => {
-
                 updateUserProfile(name, photo)
                     .then((result) => {
-                        const user = result.user
-                        // console.log(user)
-                            Swal.fire({
-                                title: 'Account created successfully',
-                                showClass: {
-                                    popup: 'animate__animated animate__fadeInDown'
-                                },
-                                hideClass: {
-                                    popup: 'animate__animated animate__fadeOutUp'
+                        // const user = result.user
+                        console.log(savedUser)
+                        fetch('http://localhost:5000/users', {
+                            method: 'POST',
+                            headers: {
+                                'content-type': 'application/json'
+                            },
+                            body: JSON.stringify(savedUser)
+                        })
+                            .then(res => res.json())
+                            .then(data => {
+                                if (data.insertedId) {
+                                    navigate('/')
+                                    Swal.fire({
+                                        title: 'Account created successfully',
+                                        showClass: {
+                                            popup: 'animate__animated animate__fadeInDown'
+                                        },
+                                        hideClass: {
+                                            popup: 'animate__animated animate__fadeOutUp'
+                                        }
+                                    })
                                 }
                             })
-                        
+
                     })
                     .catch(err => console.log(err.message))
             })
@@ -50,11 +64,33 @@ const Register = () => {
 
     const handleLogInWithGithub = () => {
         githubSignIn()
-            .then(res => {
-                console.log(res)
-                const loggedUser = res.user
-                console.log(loggedUser)
+        .then(res => {
+            const loggedUser = res.user
+            console.log(loggedUser)
+            const savedUser = { name: loggedUser?.displayName, photo: loggedUser?.photoURL, university: "", address: "", email: loggedUser?.email }
+            fetch('http://localhost:5000/users', {
+                method: 'POST',
+                headers: {
+                    'content-type': 'application/json'
+                },
+                body: JSON.stringify(savedUser)
             })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.insertedId) {
+                        navigate('/')
+                        Swal.fire({
+                            title: 'Account created successfully',
+                            showClass: {
+                                popup: 'animate__animated animate__fadeInDown'
+                            },
+                            hideClass: {
+                                popup: 'animate__animated animate__fadeOutUp'
+                            }
+                        })
+                    }
+                })
+        })
             .catch(err => console.log(err.message))
     }
 
@@ -63,8 +99,29 @@ const Register = () => {
             .then(res => {
                 const loggedUser = res.user
                 console.log(loggedUser)
-                // navigate(from, { replace: true })
-                form.reset()
+                const savedUser = { name: loggedUser?.displayName, photo: loggedUser?.photoURL, university: "", address: "", email: loggedUser?.email }
+                fetch('http://localhost:5000/users', {
+                    method: 'POST',
+                    headers: {
+                        'content-type': 'application/json'
+                    },
+                    body: JSON.stringify(savedUser)
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.insertedId) {
+                            navigate('/')
+                            Swal.fire({
+                                title: 'Account created successfully',
+                                showClass: {
+                                    popup: 'animate__animated animate__fadeInDown'
+                                },
+                                hideClass: {
+                                    popup: 'animate__animated animate__fadeOutUp'
+                                }
+                            })
+                        }
+                    })
             })
             .catch(err => console.log(err.message))
     }
@@ -76,6 +133,7 @@ const Register = () => {
                         <h2 className='text-center text-2xl font-bold'>Create a new account</h2>
                         <form onSubmit={handleRegister}>
 
+                            {/* Name */}
                             <div className="form-control">
                                 <label className="label">
                                     <span className="label-text">Name*</span>
@@ -83,13 +141,31 @@ const Register = () => {
                                 <input type="text" name='name' placeholder="Type your name here" className="input input-bordered" />
                             </div>
 
+                            {/* Photo */}
                             <div className="form-control">
                                 <label className="label">
-                                    <span className="label-text">PhotoURL*</span>
+                                    <span className="label-text">PhotoURL</span>
                                 </label>
                                 <input type="text" name='photo' placeholder="Type your photo url here" className="input input-bordered" />
                             </div>
 
+                            {/* University */}
+                            <div className="form-control">
+                                <label className="label">
+                                    <span className="label-text">University</span>
+                                </label>
+                                <input type="text" name='university' placeholder="Type your university name here" className="input input-bordered" />
+                            </div>
+
+                            {/* Address */}
+                            <div className="form-control">
+                                <label className="label">
+                                    <span className="label-text">Address</span>
+                                </label>
+                                <input type="text" name='address' placeholder="Type your address here" className="input input-bordered" />
+                            </div>
+
+                            {/* Email */}
                             <div className="form-control">
                                 <label className="label">
                                     <span className="label-text">Email*</span>
@@ -97,6 +173,7 @@ const Register = () => {
                                 <input type="email" name='email' placeholder="Type your email here" className="input input-bordered" />
                             </div>
 
+                            {/* Password */}
                             <div className="form-control">
                                 <label className="label">
                                     <span className="label-text">Password*</span>

@@ -10,8 +10,8 @@ const Header = () => {
             .catch()
     }
     return (
-        <div className='py-3'>
-            <div className="flex justify-between bg-base-100">
+        <div className='py-3 bg-blue-100 fixed w-full drop-shadow-lg z-30 bg-opacity-50'>
+            <div className="flex justify-between">
                 <div className='flex'>
                     <div className="">
                         <div className="dropdown">
@@ -23,8 +23,8 @@ const Header = () => {
                                 <li><Link to='/colleges'>Colleges</Link></li>
                                 <li><Link to='/admissions'>Admissions</Link></li>
                                 <li><Link to='/myColleges'>My Colleges</Link></li>
-                                <div className='btn btn-ghost'>
-                                    <Link to='/profile'><p>{user?.displayName}</p></Link>
+                                <div className='btn btn-ghost w-32 hidden lg:block'>
+                                    <Link to={`/profile/${user?.email}`}><p>{user?.displayName}</p></Link>
                                 </div>
                             </ul>
 
@@ -41,12 +41,19 @@ const Header = () => {
                     </div>
                 </div>
                 <div className="flex items-center mr-3">
-                    <input placeholder='search colleges' className='input input-bordered mr-1 md:mr-3 w-32 lg:w-40' type="search" name="search" id="" />
+                    <select className='select select-bordered' name='subject'>
+                        <option value=""></option>
+                        <option value="Harvard">Harvard</option>
+                        <option value="Caltech">Caltech</option>
+                        <option value="MIT">MIT</option>
+                        <option value="Yale">Yale</option>
+                        <option value="Stanford">Stanford</option>
+                    </select>
                     {
                         user ?
                             <>
                                 <div className='btn btn-ghost w-32 hidden lg:block'>
-                                    <Link to='/profile'><p>{user?.displayName}</p></Link>
+                                    <Link to={`/profile/${user?.email}`}><p>{user?.displayName}</p></Link>
                                 </div>
                                 <button className="ml-3 btn bg-violet-500 hover:bg-violet-700 border-0 text-white" onClick={handleLogOut}>Log out</button>
                             </> :

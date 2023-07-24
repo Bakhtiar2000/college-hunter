@@ -16,6 +16,8 @@ import Colleges from './Pages/Colleges/Colleges.jsx';
 import Admission from './Pages/Admission/Admission.jsx';
 import MyColleges from './Pages/MyColleges/MyColleges.jsx';
 import Profile from './Pages/Profile/Profile.jsx';
+import AdmissionForm from './Pages/Admission/AdmissionForm.jsx';
+import SingleCollege from './Pages/Shared/SingleCollege.jsx';
 
 
 const router = createBrowserRouter([
@@ -41,16 +43,26 @@ const router = createBrowserRouter([
         element: <Colleges></Colleges>
       },
       {
+        path: '/colleges/:id',
+        element: <SingleCollege></SingleCollege>,
+        loader: ({ params }) => fetch(`http://localhost:5000/colleges/${params.id}`)
+      },
+      {
         path: '/admissions',
         element: <Admission></Admission>
+      },
+      {
+        path: '/admissionForm/:id',
+        element: <AdmissionForm></AdmissionForm>
       },
       {
         path: '/myColleges',
         element: <MyColleges></MyColleges>
       },
       {
-        path: '/profile',
-        element: <Profile></Profile>
+        path: '/profile/:email',
+        element: <Profile></Profile>,
+        loader: ({ params }) => fetch(`http://localhost:5000/users/${params.email}`)
       },
     ]
   },

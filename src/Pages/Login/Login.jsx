@@ -2,13 +2,15 @@ import React, { useContext, useRef, useState } from 'react';
 import { AuthContext } from '../../Providers/AuthProvider';
 import { FcGoogle } from 'react-icons/fc';
 import { FaGithub } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 
 const Login = () => {
     const { signIn, googleSignIn, githubSignIn, passwordReset } = useContext(AuthContext)
     const [error, setError] = useState('')
     const emailRef = useRef()
+    const navigate = useNavigate()
+
     const handleLogin = event => {
         event.preventDefault()
         const form = event.target
@@ -22,6 +24,16 @@ const Login = () => {
                 const loggedUser = res.user
                 console.log(loggedUser)
                 setError('')
+                navigate('/')
+                Swal.fire({
+                    title: 'Account log in successful',
+                    showClass: {
+                        popup: 'animate__animated animate__fadeInDown'
+                    },
+                    hideClass: {
+                        popup: 'animate__animated animate__fadeOutUp'
+                    }
+                })
             })
             .catch(err => {
                 console.log(err.message)
@@ -32,21 +44,21 @@ const Login = () => {
     }
 
     const handlePasswordReset = () => {
-        const email= emailRef.current.value;
-        if(!email){
+        const email = emailRef.current.value;
+        if (!email) {
             alert('Please provide the email address to reset password')
             return
         }
 
         passwordReset(email)
-        .then(res=>{
-            Swal.fire(
-                'Check your email',
-                'Password reset request sent',
-                'success'
-              )
-        })
-        .catch(err=> console.log(err.message))
+            .then(res => {
+                Swal.fire(
+                    'Check your email',
+                    'Password reset request sent',
+                    'success'
+                )
+            })
+            .catch(err => console.log(err.message))
     }
 
     const handleLogInWithGoogle = () => {
@@ -54,8 +66,29 @@ const Login = () => {
             .then(res => {
                 const loggedUser = res.user
                 console.log(loggedUser)
-                setError('')
-                // navigate(from, { replace: true })
+                const savedUser = { name: loggedUser?.displayName, photo: loggedUser?.photoURL, university: "", address: "", email: loggedUser?.email }
+                fetch('http://localhost:5000/users', {
+                    method: 'POST',
+                    headers: {
+                        'content-type': 'application/json'
+                    },
+                    body: JSON.stringify(savedUser)
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.insertedId) {
+                            navigate('/')
+                            Swal.fire({
+                                title: 'Account log in successful',
+                                showClass: {
+                                    popup: 'animate__animated animate__fadeInDown'
+                                },
+                                hideClass: {
+                                    popup: 'animate__animated animate__fadeOutUp'
+                                }
+                            })
+                        }
+                    })
             })
             .catch(err => setError(err.message))
     }
@@ -63,9 +96,31 @@ const Login = () => {
     const handleLogInWithGithub = () => {
         githubSignIn()
             .then(res => {
-                console.log(res)
                 const loggedUser = res.user
                 console.log(loggedUser)
+                const savedUser = { name: loggedUser?.displayName, photo: loggedUser?.photoURL, university: "", address: "", email: loggedUser?.email }
+                fetch('http://localhost:5000/users', {
+                    method: 'POST',
+                    headers: {
+                        'content-type': 'application/json'
+                    },
+                    body: JSON.stringify(savedUser)
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.insertedId) {
+                            navigate('/')
+                            Swal.fire({
+                                title: 'Account log in successful',
+                                showClass: {
+                                    popup: 'animate__animated animate__fadeInDown'
+                                },
+                                hideClass: {
+                                    popup: 'animate__animated animate__fadeOutUp'
+                                }
+                            })
+                        }
+                    })
             })
             .catch(err => console.log(err.message))
     }

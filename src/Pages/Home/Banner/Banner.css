@@ -1,0 +1,5 @@
+.banner-bg{
+    background-image: url('../../../../public/assets/banner.webp');
+    background-repeat: no-repeat;
+    background-size: cover;
+}
